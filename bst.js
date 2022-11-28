@@ -17,9 +17,37 @@ const tree = (arr) => {
     node.rightSide = buildTree(arr, mid + 1, end);
     return node;
   };
-  let sortedArray = removeDuplicateValues(mergeSort(arr));
+  const sortedArray = removeDuplicateValues(mergeSort(arr));
   let root = buildTree(sortedArray, 0, sortedArray.length - 1);
   return root;
+};
+
+const insert = (root, input) => {
+  const newNode = nodeFactory(input);
+  let temp = root;
+  while (temp.rightSide !== null || temp.leftSide !== null) {
+    if (temp.value === input) return;
+    if (input > temp.value) {
+      if (temp.rightSide !== null) {
+        temp = temp.rightSide;
+      } else {
+        temp.rightSide = newNode;
+        return;
+      }
+    } else {
+      if (temp.leftSide !== null) {
+        temp = temp.leftSide;
+      } else {
+        temp.leftSide = newNode;
+        return;
+      }
+    }
+  }
+  if (input > temp.value) {
+    temp.rightSide = newNode;
+  } else {
+    temp.leftSide = newNode;
+  }
 };
 
 function removeDuplicateValues(arr) {
@@ -78,5 +106,14 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 let array = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
 
 //console.log(removeDuplicateValues(mergeSort(array)));
-console.log(tree(array));
-prettyPrint(tree(array));
+newTree = tree(array);
+insert(newTree, 11);
+insert(newTree, 12);
+insert(newTree, 15);
+insert(newTree, 30);
+insert(newTree, 2);
+insert(newTree, 8);
+
+prettyPrint(newTree);
+
+//tree.insert(10);

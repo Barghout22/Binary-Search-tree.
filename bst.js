@@ -112,7 +112,6 @@ insert(newTree, 12);
 insert(newTree, 15);
 insert(newTree, 30);
 insert(newTree, 2);
-insert(newTree, 8);
 
 prettyPrint(newTree);
 

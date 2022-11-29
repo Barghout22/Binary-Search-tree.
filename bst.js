@@ -50,6 +50,46 @@ const insert = (root, input) => {
   }
 };
 
+const Delete = (input, root) => {
+  if (root === null) return null;
+
+  if (input > root.value) {
+    root.rightSide = Delete(input, root.rightSide);
+  } else if (input < root.value) {
+    root.leftSide = Delete(input, root.leftSide);
+  } else {
+    if (root.rightSide === null && root.leftSide === null) {
+      return null;
+    } else if (root.rightSide !== null && root.leftSide === null) {
+      return root.rightSide;
+    } else if (root.rightSide === null && root.leftSide !== null) {
+      return root.leftSide;
+    } else {
+      let temp = root.rightSide;
+      while (temp.leftSide !== null) {
+        temp = temp.leftSide;
+      }
+      root.value = temp.value;
+      root.rightSide = Delete(root.value, root.rightSide);
+    }
+  }
+  return root;
+};
+
+const find = (input, root) => {
+  if (root.value === input) return root;
+  let temp = root;
+  if (temp.value > input) {
+    temp = temp.leftSide;
+    if (temp === null) return "value not found";
+    return find(input, temp);
+  } else {
+    temp = temp.rightSide;
+    if (temp === null) return "value not found";
+    return find(input, temp);
+  }
+};
+
 function removeDuplicateValues(arr) {
   let uniqueArray = [];
 
@@ -113,6 +153,8 @@ insert(newTree, 15);
 insert(newTree, 30);
 insert(newTree, 2);
 
-prettyPrint(newTree);
+// console.log(find(67, newTree));
+
+prettyPrint(Delete(23, newTree));
 
 //tree.insert(10);

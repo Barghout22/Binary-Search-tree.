@@ -90,6 +90,21 @@ const find = (input, root) => {
   }
 };
 
+const levelOrderTraversal = (fncn, root) => {
+  if (root == null) return root;
+  let queueArray = [root];
+  let resultArray = [];
+  let temp;
+  while (queueArray[0]) {
+    temp = queueArray.shift();
+    if (fncn !== null) fncn(temp);
+    if (temp.leftSide !== null) queueArray.push(temp.leftSide);
+    if (temp.rightSide !== null) queueArray.push(temp.rightSide);
+    resultArray.push(temp.value);
+  }
+  if (fncn === null) return resultArray;
+};
+
 function removeDuplicateValues(arr) {
   let uniqueArray = [];
 
@@ -153,8 +168,10 @@ insert(newTree, 15);
 insert(newTree, 30);
 insert(newTree, 2);
 
+let arrow = levelOrderTraversal(null, newTree);
+console.log(arrow);
 // console.log(find(67, newTree));
 
-prettyPrint(Delete(23, newTree));
+prettyPrint(newTree);
 
 //tree.insert(10);

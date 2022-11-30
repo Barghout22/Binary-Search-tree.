@@ -105,6 +105,65 @@ const levelOrderTraversal = (fncn, root) => {
   if (fncn === null) return resultArray;
 };
 
+const inOrderTraversal = (func, root) => {
+  if (root === null) return null;
+  let returnArr = [];
+  if (root.leftSide !== null) {
+    let left = inOrderTraversal(func, root.leftSide);
+    returnArr = [...left];
+  }
+  returnArr.push(root.value);
+  if (root.rightSide !== null) {
+    let right = inOrderTraversal(func, root.rightSide);
+    returnArr = [...returnArr, ...right];
+  }
+
+  if (func) {
+    func(root);
+    return;
+  }
+  return returnArr;
+};
+
+const preOrderTraversal = (func, root) => {
+  if (root === null) return null;
+  let returnArr = [];
+  returnArr.push(root.value);
+  if (root.leftSide !== null) {
+    let left = preOrderTraversal(func, root.leftSide);
+    returnArr = [...returnArr, ...left];
+  }
+  if (root.rightSide !== null) {
+    let right = preOrderTraversal(func, root.rightSide);
+    returnArr = [...returnArr, ...right];
+  }
+  if (func) {
+    func(root);
+    return;
+  }
+  return returnArr;
+};
+
+const postOrderTraversal = (func, root) => {
+  if (root === null) return null;
+  let returnArr = [];
+  if (root.leftSide !== null) {
+    let left = postOrderTraversal(func, root.leftSide);
+    returnArr = [...left];
+  }
+  if (root.rightSide !== null) {
+    let right = postOrderTraversal(func, root.rightSide);
+    returnArr = [...returnArr, ...right];
+  }
+  returnArr.push(root.value);
+
+  if (func) {
+    func(root);
+    return;
+  }
+  return returnArr;
+};
+
 function removeDuplicateValues(arr) {
   let uniqueArray = [];
 
@@ -162,14 +221,17 @@ let array = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
 
 //console.log(removeDuplicateValues(mergeSort(array)));
 newTree = tree(array);
-insert(newTree, 11);
-insert(newTree, 12);
-insert(newTree, 15);
-insert(newTree, 30);
-insert(newTree, 2);
+// insert(newTree, 11);
+// insert(newTree, 12);
+// insert(newTree, 15);
+// insert(newTree, 30);
+// insert(newTree, 2);
 
-let arrow = levelOrderTraversal(null, newTree);
-console.log(arrow);
+//let arrow = inOrderTraversal(null, newTree);
+//console.log(inOrderTraversal(null, newTree));
+console.log(preOrderTraversal(null, newTree));
+console.log(postOrderTraversal(null, newTree));
+
 // console.log(find(67, newTree));
 
 prettyPrint(newTree);

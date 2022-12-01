@@ -164,6 +164,48 @@ const postOrderTraversal = (func, root) => {
   return returnArr;
 };
 
+const height = (root) => {
+  if (root === null) return -1;
+
+  const left = height(root.leftSide);
+  const right = height(root.rightSide);
+
+  return Math.max(left, right) + 1;
+};
+
+const depth = (input, root, edgeCounter = 0) => {
+  if (root === null) return;
+  if (input === root.value) return edgeCounter;
+
+  if (input > root.value) {
+    return depth(input, root.rightSide, ++edgeCounter);
+  } else {
+    return depth(input, root.leftSide, ++edgeCounter);
+  }
+};
+
+const isBalancedprocess = (root) => {
+  if (root === null) return 0;
+
+  const left = isBalancedprocess(root.leftSide);
+  const right = isBalancedprocess(root.rightSide);
+  difference = Math.abs(left - right);
+
+  if (left === false || right === false || difference > 1) {
+    return false;
+  }
+  return Math.max(left, right) + 1;
+};
+
+const rebalance = (root) => {
+  const Arr = inOrderTraversal(null, root);
+  return tree(Arr);
+};
+
+const isBalanced = (root) => {
+  return Boolean(isBalancedprocess(root));
+};
+
 function removeDuplicateValues(arr) {
   let uniqueArray = [];
 
@@ -217,23 +259,34 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
   }
 };
 
-let array = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
-
-//console.log(removeDuplicateValues(mergeSort(array)));
-newTree = tree(array);
-// insert(newTree, 11);
-// insert(newTree, 12);
-// insert(newTree, 15);
-// insert(newTree, 30);
-// insert(newTree, 2);
-
-//let arrow = inOrderTraversal(null, newTree);
-//console.log(inOrderTraversal(null, newTree));
-console.log(preOrderTraversal(null, newTree));
-console.log(postOrderTraversal(null, newTree));
-
 // console.log(find(67, newTree));
+// console.log(isBalanced(newTree));
+//prettyPrint(rebalance(newTree));
+// console.log(isBalanced(rebalance(newTree)));
 
-prettyPrint(newTree);
+//console.log(depth(23, newTree));
 
-//tree.insert(10);
+const array = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
+
+let newTree = tree(array);
+console.log(`is this tree balanced:${isBalanced(newTree)}`);
+console.log(`levelOrderTraversal:${levelOrderTraversal(null, newTree)}`);
+console.log(`in order :${inOrderTraversal(null, newTree)}`);
+console.log(`pre order :${preOrderTraversal(null, newTree)}`);
+console.log(`post order:${postOrderTraversal(null, newTree)}`);
+
+insert(newTree, 11);
+insert(newTree, 12);
+insert(newTree, 15);
+insert(newTree, 30);
+insert(newTree, 2);
+
+console.log(
+  `with the new elements ,is this tree balanced:${isBalanced(newTree)}`
+);
+newTree = rebalance(newTree);
+console.log(`is this tree rebalanced:${isBalanced(newTree)}`);
+console.log(`levelOrderTraversal:${levelOrderTraversal(null, newTree)}`);
+console.log(`in order :${inOrderTraversal(null, newTree)}`);
+console.log(`pre order :${preOrderTraversal(null, newTree)}`);
+console.log(`post order:${postOrderTraversal(null, newTree)}`);

@@ -113,22 +113,25 @@ const inOrderTraversal = (func, root) => {
     returnArr = [...left];
   }
   returnArr.push(root.value);
+  if (func) {
+    func(root);
+  }
   if (root.rightSide !== null) {
     let right = inOrderTraversal(func, root.rightSide);
     returnArr = [...returnArr, ...right];
   }
 
-  if (func) {
-    func(root);
-    return;
-  }
-  return returnArr;
+  if (!func) return returnArr;
+  return;
 };
 
 const preOrderTraversal = (func, root) => {
   if (root === null) return null;
   let returnArr = [];
   returnArr.push(root.value);
+  if (func) {
+    func(root);
+  }
   if (root.leftSide !== null) {
     let left = preOrderTraversal(func, root.leftSide);
     returnArr = [...returnArr, ...left];
@@ -137,11 +140,9 @@ const preOrderTraversal = (func, root) => {
     let right = preOrderTraversal(func, root.rightSide);
     returnArr = [...returnArr, ...right];
   }
-  if (func) {
-    func(root);
-    return;
-  }
-  return returnArr;
+
+  if (!func) return returnArr;
+  return;
 };
 
 const postOrderTraversal = (func, root) => {
